@@ -1,31 +1,36 @@
 ---
 lab:
-    title: '랩: Azure Stack Hub에서 권한 있는 엔드포인트 액세스'
-    module: '모듈 5: 인프라 관리'
+  title: '랩: Azure Stack Hub에서 권한 있는 엔드포인트 액세스'
+  module: 'Module 5: Manage Infrastructure'
+ms.openlocfilehash: c3b2248f0d6b160ac4356875f135d374ff51fff9
+ms.sourcegitcommit: 3ce6441f824c1ac2b22159d6830eba55dba5ba66
+ms.translationtype: HT
+ms.contentlocale: ko-KR
+ms.lasthandoff: 03/01/2022
+ms.locfileid: "139251635"
 ---
+# <a name="lab---access-the-privileged-endpoint-in-azure-stack-hub"></a>랩 - Azure Stack Hub에서 권한 있는 엔드포인트 액세스
+# <a name="student-lab-manual"></a>학생용 랩 매뉴얼
 
-# 랩 - Azure Stack Hub에서 권한 있는 엔드포인트 액세스
-# 학생 랩 매뉴얼
-
-## 랩 종속성
+## <a name="lab-dependencies"></a>랩 종속성
 
 - 없음
 
-## 예상 소요 시간
+## <a name="estimated-time"></a>예상 소요 시간
 
 30분
 
-## 랩 시나리오
+## <a name="lab-scenario"></a>랩 시나리오
 
 여러분은 Azure Stack Hub 환경의 운영자입니다. 권한 있는 엔드포인트에 액세스하는 방법을 확인해야 합니다.
 
-## 목표
+## <a name="objectives"></a>목표
 
 이 랩을 완료하면 다음을 수행할 수 있습니다.
 
 - Azure Stack Hub 권한 있는 엔드포인트 액세스 
 
-## 랩 환경 
+## <a name="lab-environment"></a>랩 환경 
 
 이 랩에서는 AD FS(Active Directory Federation Services)와 통합된 ASDK 인스턴스(ID 공급자로 백업된 Active Directory)를 사용합니다. 
 
@@ -46,26 +51,26 @@ lab:
   - ASDK 호스트 관리자 암호: **Pa55w.rd1234**
 
 
-### 연습 1: 권한 있는 엔드포인트를 통해 Azure Stack Hub 관리
+### <a name="exercise-1-manage-azure-stack-hub-via-the-privileged-endpoint"></a>연습 1: 권한 있는 엔드포인트를 통해 Azure Stack Hub 관리
 
-이 연습에서는 권한 있는 엔드포인트로의 PowerShell 원격 세션을 설정하여 해당 원격 세션을 통해 액세스 가능한 Windows PowerShell cmdlet을 실행합니다. 이 연습에서는 다음 작업을 수행합니다.
+이 연습에서는 권한 있는 엔드포인트로의 PowerShell 원격 세션을 설정하여 해당 원격 세션을 통해 액세스 가능한 Windows PowerShell cmdlet을 실행합니다. 연습은 다음 작업으로 구성됩니다.
 
 1. Windows PowerShell을 통해 권한 있는 엔드포인트에 연결
 1. 권한 있는 엔드포인트를 통해 사용 가능한 기능 검토
 1. 권한 있는 엔드포인트로의 연결을 닫고 세션 기록 수집
 
-#### 작업 1: Windows PowerShell을 통해 권한 있는 엔드포인트에 연결
+#### <a name="task-1-connect-to-the-privileged-endpoint-via-windows-powershell"></a>작업 1: Windows PowerShell을 통해 권한 있는 엔드포인트에 연결
 
 이 작업에서는 다음을 수행합니다.
 
 - Windows PowerShell을 통해 권한 있는 엔드포인트에 연결
 
-1. 필요한 경우 다음 자격 증명을 사용하여 **AzS-HOST1**에 로그인합니다.
+1. 필요한 경우 다음 자격 증명을 사용하여 **AzS-HOST1** 에 로그인합니다.
 
     - 사용자 이름: **AzureStackAdmin@azurestack.local**
     - 암호: **Pa55w.rd1234**
 
-1. **AzS-HOST1**에 연결된 원격 데스크톱 세션 내에서 관리자로 PowerShell ISE를 시작합니다.
+1. **AzS-HOST1** 에 연결된 원격 데스크톱 세션 내에서 관리자로 PowerShell ISE를 시작합니다.
 1. **관리자: Windows PowerShell ISE** 콘솔에서 다음 명령을 실행하여 권한 있는 엔드포인트를 실행 중인 인프라 VM의 IP 주소를 확인합니다. 
 
     ```powershell
@@ -77,11 +82,11 @@ lab:
     ```powershell
     $trustedHosts = (Get-Item -Path WSMan:\localhost\Client\TrustedHosts).Value
     If ($trustedHosts -ne '*') {
-	If ($trustedHosts -ne '') {
-		$trustedHosts += ",ipAddress"
-	} else {
-	$trustedHosts = "$ipAddress"
-	}
+    If ($trustedHosts -ne '') {
+        $trustedHosts += ",ipAddress"
+    } else {
+    $trustedHosts = "$ipAddress"
+    }
     }
     Set-Item WSMan:\localhost\Client\TrustedHosts -Value $TrustedHosts -Force
     ```
@@ -103,13 +108,13 @@ lab:
 1. PowerShell 원격 세션이 정상적으로 설정되었는지 확인합니다. 세션이 정상적으로 설정되면 권한 있는 엔드포인트를 실행 중인 인프라 VM의 IP 주소로 시작하는 프롬프트가 Windows PowerShell ISE 창의 콘솔 창에서 대괄호 안에 표시되어야 합니다.
 
 
-#### 작업 2: 권한 있는 엔드포인트를 통해 사용 가능한 기능 검토
+#### <a name="task-2-review-the-functionality-available-via-the-privileged-endpoint"></a>작업 2: 권한 있는 엔드포인트를 통해 사용 가능한 기능 검토
 
 이 작업에서는 다음을 수행합니다.
 
 - 권한 있는 엔드포인트를 통해 사용 가능한 기능 검토
 
-1. **AzS-HOST1**에 연결된 원격 데스크톱 세션 내의 PowerShell 원격 세션에 표시된 **관리자: Windows PowerShell ISE** 창의 콘솔 창에서 다음 명령을 실행하여 사용 가능한 모든 PowerShell cmdlet을 확인합니다.
+1. **AzS-HOST1** 에 연결된 원격 데스크톱 세션 내의 **관리자: Windows PowerShell ISE** 창의 PowerShell 원격 세션에서, 콘솔 창에서 다음 명령을 실행하여 사용 가능한 모든 PowerShell cmdlet을 확인합니다.
 
     ```powershell
     Get-Command
@@ -128,14 +133,13 @@ lab:
     ```powershell
     Test-AzureStack -Group UpdateReadiness 
     ```
+    >**참고**: ASDK에서는 업데이트를 지원하지 않으므로 이 명령은 반드시 데모용으로만 사용해야 합니다. 실패한 테스트가 보고되는 경우 모두 무시합니다.
 
-    >**참고**: ASDK에서는 업데이트를 지원하지 않으므로 이 명령은 반드시 데모용으로만 사용해야 합니다. 
-
-    >**참고**: **Test-AzureStack** 기능 소개 정보는 [Azure Stack Hub 시스템 상태 유효성 검사](https://docs.microsoft.com/ko-kr/azure-stack/operator/azure-stack-diagnostic-test?view=azs-2008)를 참조하세요.
+    >**참고**: **Test-AzureStack** 기능 소개 정보는 [Azure Stack Hub 시스템 상태 유효성 검사](https://docs.microsoft.com/en-us/azure-stack/operator/azure-stack-diagnostic-test?view=azs-2008)를 참조하세요.
 
     >**참고**: 지원 시나리오에서는 Microsoft 지원 엔지니어가 Azure Stack Hub 인프라의 내부 항목에 액세스하기 위해 권한 있는 엔드포인트 PowerShell 세션의 권한을 높여야 할 수도 있습니다. 이 프로세스를 권한 있는 엔드포인트 잠금 해제라고 합니다. 세션 권한 상승 프로세스는 사용자 2명이 조직 인증 2회를 진행하는 2단계 프로세스입니다. 항상 환경을 제어할 수 있는 Azure Stack Hub 운영자가 잠금 해제 절차를 시작합니다. 다음 작업에서 이 프로세스를 파악할 수 있는 에뮬레이트된 시나리오를 단계별로 진행할 예정입니다.
 
-1. **관리자: Windows PowerShell ISE** 창의 PowerShell 원격 세션에서 다음 명령을 실행하여 권한 있는 엔드포인트가 현재 잠겨 있는지 유효성을 검사합니다.
+1. **관리자: Windows PowerShell ISE** 창의 PowerShell 원격 세션에서 다음 명령을 실행하여 권한 있는 엔드포인트가 현재 잠겨 있는지 확인합니다.
 
     ```powershell
     Get-SupportSessionInfo
@@ -150,7 +154,7 @@ lab:
     >**참고**: 지원 시나리오에서는 Microsoft 지원 엔지니어가 선택한 채팅, 이메일 등의 매체를 통해 요청 토큰을 엔지니어에게 전달합니다. 그러면 Microsoft 지원 엔지니어는 요청 토큰을 사용하여 지원 세션 인증 토큰을 생성한 다음 해당 값을 릴레이합니다. 다음으로는 동일 PowerShell 원격 세션에서 **Unlock-SupportSession** cmdlet을 실행하고 메시지가 표시되면 지원 세션 인증 토큰 값을 입력합니다. 그러면 PowerShell 원격 세션의 권한이 상승되어 인프라에 아무 제한 없이 연결할 수 있으며 모든 관리 기능을 사용할 수 있게 됩니다.
 
 
-#### 작업 3: 권한 있는 엔드포인트로의 세션을 닫고 세션 기록 수집
+#### <a name="task-3-close-the-session-to-the-privilege-endpoints-and-collect-the-session-transcript"></a>작업 3: 권한 있는 엔드포인트로의 세션을 닫고 세션 기록 수집
 
 이 작업에서는 다음을 수행합니다.
 
@@ -160,7 +164,7 @@ lab:
 
 >**참고**: 먼저 권한 있는 엔드포인트 로그를 저장할 파일 공유를 만듭니다.
 
-1. **AzS-HOST1**에 연결된 원격 데스크톱 세션 내에서 관리자로 다른 PowerShell ISE를 시작합니다.
+1. **AzS-HOST1** 에 연결된 원격 데스크톱 세션 내에서 관리자로 다른 PowerShell ISE를 시작합니다.
 1. **관리자: Windows PowerShell ISE** 콘솔에서 다음 명령을 실행하여 권한 있는 엔드포인트 세션 로그를 저장할 공유를 만들고 구성합니다.
 
     ```powershell
@@ -174,9 +178,11 @@ lab:
 1. **관리자: Windows PowerShell ISE** 창의 PowerShell 원격 세션으로 다시 전환한 후 다음 명령을 실행하여 권한 있는 엔드포인트 세션을 닫고 외부 파일 공유에 보존용으로 세션 로그 파일을 전송합니다.
 
     ```powershell
-    Close-PrivilegedEndpoint -TranscriptsPathDestination '\\AzS-HOST1.azurestack.local\PEPLogs' -Credential $using:adminCredentials
+    Close-PrivilegedEndpoint -TranscriptsPathDestination '\\AzSHOST-1.azurestack.local\PEPLogs' -Credential $using:adminCredentials
     ```
 
-1. cmdlet 실행이 완료될 때까지 기다렸다가 파일 탐색기에서 **C:\\PEPLogs** 폴더의 내용을 검토합니다.
+    >**참고**: 경고 메시지는 모두 무시합니다.
 
->**검토**: 이 연습에서는 권한 있는 엔드포인트로의 PowerShell 원격 세션을 설정하여 해당 기능을 검토한 후 세션을 닫았습니다.
+1. cmdlet 실행이 완료될 때까지 기다렸다가 파일 탐색기에서 **C:\\PEPLogs** 폴더의 내용을 검토합니다. 
+
+>**복습**: 이 연습에서는 권한 있는 엔드포인트로의 PowerShell 원격 세션을 설정하여 해당 기능을 검토한 후 세션을 닫았습니다.
