@@ -2,13 +2,8 @@
 lab:
   title: '랩: Azure Stack Hub에서 App Service 리소스 공급자 구현'
   module: 'Module 2: Provide Services'
-ms.openlocfilehash: 131748436ff67e32dd18e5ee5fb1fda7beedd2af
-ms.sourcegitcommit: 4949ab968553abc20d2d72d6fd30a33ffae0317a
-ms.translationtype: HT
-ms.contentlocale: ko-KR
-ms.lasthandoff: 01/13/2022
-ms.locfileid: "137893146"
 ---
+
 # <a name="lab---implement-app-service-resource-provider-in-azure-stack-hub"></a>랩 - Azure Stack Hub에서 App Service 리소스 공급자 구현
 # <a name="student-lab-manual"></a>학생용 랩 매뉴얼
 
@@ -78,28 +73,28 @@ ms.locfileid: "137893146"
 
 - SQL Server 호스팅 서버 프로비전
 
-1. 필요한 경우 다음 자격 증명을 사용하여 **AzS-HOST1** 에 로그인합니다.
+1. 필요한 경우 다음 자격 증명을 사용하여 **AzS-HOST1**에 로그인합니다.
 
     - 사용자 이름: **AzureStackAdmin@azurestack.local**
     - 암호: **Pa55w.rd1234**
 
-1. **AzS-HOST1** 에 연결된 원격 데스크톱 세션에서 [Azure Stack Hub 관리자 포털](https://adminportal.local.azurestack.external/)이 표시된 웹 브라우저 창을 열고 CloudAdmin@azurestack.local로 로그인합니다.
-1. Azure Stack Hub 관리자 포털의 허브 메뉴에서 **리소스 만들기** 를 클릭합니다.
-1. **새** 블레이드에서 **컴퓨팅** 을 선택하고 사용 가능한 리소스 종류 목록에서 **{WS-BYOL} 무료 SQL Server 라이선스: Windows Server 2016의 SQL Server 2017 Express** 를 선택합니다.
-1. **가상 머신 만들기** 블레이드의 **기본 내용** 창에서 다음 설정을 지정하고 **확인** 을 클릭합니다(나머지는 기본값을 그대로 유지).
+1. **AzS-HOST1**에 연결된 원격 데스크톱 세션에서 [Azure Stack Hub 관리자 포털](https://adminportal.local.azurestack.external/)이 표시된 웹 브라우저 창을 열고 CloudAdmin@azurestack.local로 로그인합니다.
+1. Azure Stack Hub 관리자 포털의 허브 메뉴에서 **리소스 만들기**를 클릭합니다.
+1. **새** 블레이드에서 **컴퓨팅**을 선택하고 사용 가능한 리소스 종류 목록에서 **{WS-BYOL} 무료 SQL Server 라이선스: Windows Server 2016의 SQL Server 2017 Express**를 선택합니다.
+1. **가상 머신 만들기** 블레이드의 **기본 내용** 창에서 다음 설정을 지정하고 **확인**을 클릭합니다(나머지는 기본값을 그대로 유지).
 
     - 이름: **SqlHOST1**
     - VM 디스크 유형: **프리미엄 SSD**
     - 사용자 이름: **sqladmin**
-    - 암호: **Pa55w.rd**
+    - 암호: **Pa55w.rd1234**
     - 구독: **기본 공급자 구독**
-    - 리소스 그룹: 새 리소스 그룹 **sql.resources-RG** 의 이름.
+    - 리소스 그룹: 새 리소스 그룹 **sql.resources-RG**의 이름.
     - 위치: **로컬**
 
-1. **크기 선택** 블레이드에서 **DS1_v2** 를 선택하고 **선택** 을 클릭합니다.
-1. **가상 머신 만들기** 블레이드의 **설정** 창에서 **네트워크 보안 그룹** 설정을 **고급** 으로 지정하고 **네트워크 보안 그룹(방화벽)** 을 클릭합니다.
-1. **네트워크 보안 그룹 만들기** 블레이드에서 **+ 인바운드 규칙 추가** 를 클릭합니다.
-1. **인바운드 보안 규칙 추가** 블레이드에서 다음 설정을 지정하고 **추가** 를 클릭합니다(나머지는 기본값을 그대로 유지).
+1. **크기 선택** 블레이드에서 **DS1_v2**를 선택하고 **선택**을 클릭합니다.
+1. **가상 머신 만들기** 블레이드의 **설정** 창에서 **네트워크 보안 그룹** 설정을 **고급**으로 지정하고 **네트워크 보안 그룹(방화벽)** 을 클릭합니다.
+1. **네트워크 보안 그룹 만들기** 블레이드에서 **+ 인바운드 규칙 추가**를 클릭합니다.
+1. **인바운드 보안 규칙 추가** 블레이드에서 다음 설정을 지정하고 **추가**를 클릭합니다(나머지는 기본값을 그대로 유지).
 
     - 대상 포트 범위: **1433**
     - 프로토콜: **TCP**
@@ -107,50 +102,50 @@ ms.locfileid: "137893146"
     - 우선 순위: **200**
     - 이름: **custom-allow-sql**
 
-1. **네트워크 보안 그룹 만들기** 블레이드로 돌아와서 **확인** 을 클릭합니다.
-1. **가상 머신 만들기** 블레이드의 **설정** 창으로 돌아와서 다음 설정을 지정하고 **확인** 을 클릭합니다(나머지는 기본값을 그대로 유지).
+1. **네트워크 보안 그룹 만들기** 블레이드로 돌아와서 **확인**을 클릭합니다.
+1. **가상 머신 만들기** 블레이드의 **설정** 창으로 돌아와서 다음 설정을 지정하고 **확인**을 클릭합니다(나머지는 기본값을 그대로 유지).
 
     - 부팅 진단: Disabled
     - 게스트 OS 진단: Disabled
 
-1. **가상 머신 만들기** 블레이드의 **SQL Server 설정** 창에서 다음 설정을 지정하고 **확인** 을 클릭합니다(나머지는 기본값을 그대로 유지).
+1. **가상 머신 만들기** 블레이드의 **SQL Server 설정** 창에서 다음 설정을 지정하고 **확인**을 클릭합니다(나머지는 기본값을 그대로 유지).
 
     - SQL 연결: **공용(인터넷)**
     - 포트: **1433**
-    - SQL 인증: 사용
+    - SQL 인증: 사용****
     - 로그인 이름: **SQLAdmin**
-    - 암호: **Pa55w.rd**
+    - 암호: **Pa55w.rd1234**
     - 스토리지 구성: **일반**
-    - 자동화된 패치: 사용 안 함
-    - 자동화된 백업: 사용 안 함
-    - Azure Key Vault 통합: 사용 안 함
+    - 자동화된 패치: 사용 안 함****
+    - 자동화된 백업: 사용 안 함****
+    - Azure Key Vault 통합: 사용 안 함****
 
-1. **가상 머신 만들기** 블레이드의 **요약** 창에서 **확인** 을 클릭합니다.
+1. **가상 머신 만들기** 블레이드의 **요약** 창에서 **확인**을 클릭합니다.
 
-    >**참고**: 배포가 완료될 때까지 기다립니다. 20분 정도 걸릴 수 있습니다.
+    >**참고**: 배포가 완료될 때까지 기다리세요. 20분 정도 걸릴 수 있습니다.
 
-1. 배포가 완료되면 **SqlHOST1** 가상 머신 블레이드로 이동하여 **개요** 섹션의 **DNS 이름** 레이블 바로 아래에 있는 **구성** 을 클릭합니다.
-1. **SqlHOST1-ip \| 구성** 블레이드의 **DNS 이름 레이블(선택 사항)** 텍스트 상자에 **sqlhost1** 를 입력하고 **저장** 을 클릭합니다.
+1. 배포가 완료되면 **SqlHOST1** 가상 머신 블레이드로 이동하여 **개요** 섹션의 **DNS 이름** 레이블 바로 아래에 있는 **구성**을 클릭합니다.
+1. **SqlHOST1-ip \| 구성** 블레이드의 **DNS 이름 레이블(선택 사항)** 텍스트 상자에 **sqlhost1**를 입력하고 **저장**을 클릭합니다.
 
-    >**참고**: 이렇게 하면 **sqlhost1.local.cloudapp.azurestack.external** DNS 이름을 통해 **sqlhost1** 을 사용할 수 있게 됩니다.
+    >**참고**: 이렇게 하면 **sqlhost1.local.cloudapp.azurestack.external** DNS 이름을 통해 **sqlhost1**을 사용할 수 있게 됩니다.
 
-1. **sqlhost1-ip \| 구성** 블레이드에서 **할당** 옵션을 **정적** 으로 설정하고 **저장** 을 클릭합니다.
+1. **sqlhost1-ip \| 구성** 블레이드에서 **할당** 옵션을 **정적**으로 설정하고 **저장**을 클릭합니다.
 
     >**참고**: 이렇게 하면 **sqlhost1** 가상 머신 다시 시작이 트리거됩니다. 다시 시작이 완료될 때까지 기다렸다가 다음 단계를 진행합니다.
 
-1. **AzSHOST-1** 에 연결된 원격 데스크톱 세션 내에서 **sqlhost1.local.cloudapp.azurestack.external** 로 연결하는 원격 데스크톱 세션을 시작하고 메시지가 표시되면 다음 자격 증명을 사용하여 로그인합니다.
+1. **AzSHOST-1**에 연결된 원격 데스크톱 세션 내에서 **sqlhost1.local.cloudapp.azurestack.external**로 연결하는 원격 데스크톱 세션을 시작하고 메시지가 표시되면 다음 자격 증명을 사용하여 로그인합니다.
 
     - 사용자 이름: **SQLAdmin**
-    - 암호: **Pa55w.rd**
+    - 암호: **Pa55w.rd1234**
 
-1. **SqlHOST1** 에 연결된 원격 데스크톱 세션 내에서 **시작** 을 마우스 오른쪽 단추로 클릭하고 오른쪽 클릭 메뉴에서 **명령 프롬프트(관리자)** 를 선택합니다. 
-1. **SqlHOST1** 에 연결된 원격 데스크톱 세션 내의 **관리자: 명령 프롬프트** 에서 다음 명령을 실행하여 로컬 SQL Server 인스턴스로의 SQLCMD 세션을 시작합니다.
+1. **SqlHOST1**에 연결된 원격 데스크톱 세션 내에서 **시작**을 마우스 오른쪽 단추로 클릭하고 오른쪽 클릭 메뉴에서 **명령 프롬프트(관리자)** 를 선택합니다. 
+1. **SqlHOST1**에 연결된 원격 데스크톱 세션 내의 **관리자: 명령 프롬프트**에서 다음 명령을 실행하여 로컬 SQL Server 인스턴스로의 SQLCMD 세션을 시작합니다.
 
     ```
     sqlcmd
     ```
 
-1. **SqlHOST1** 에 연결된 원격 데스크톱 세션 내의 **관리자: 명령 프롬프트** 에서 다음 명령을 실행하여 SQL Server용으로 포함된 데이터베이스 인증을 사용하도록 설정합니다.
+1. **SqlHOST1**에 연결된 원격 데스크톱 세션 내의 **관리자: 명령 프롬프트**에서 다음 명령을 실행하여 SQL Server용으로 포함된 데이터베이스 인증을 사용하도록 설정합니다.
 
     ```
     sp_configure 'contained database authentication', 1;
@@ -161,7 +156,7 @@ ms.locfileid: "137893146"
 
     > **참고:** 이 랩의 뒷부분에서 App Service 리소스 공급자를 구현할 때 이 호스팅 서버를 사용하려면 이 단계를 수행해야 합니다.
 
-    > **참고:** **sqlhost1.local.cloudapp.azurestack.external** 로 연결하는 원격 데스크톱 세션은 열어 둡니다. 이 랩 뒷부분에서 해당 세션을 사용할 것입니다.
+    > **참고:** **sqlhost1.local.cloudapp.azurestack.external**로 연결하는 원격 데스크톱 세션은 열어 둡니다. 이 랩 뒷부분에서 해당 세션을 사용할 것입니다.
 
 
 #### <a name="task-2-provision-a-file-server"></a>작업 2: 파일 서버 프로비전
@@ -170,26 +165,26 @@ ms.locfileid: "137893146"
 
 - 파일 서버 프로비전
 
-1. **AzSHOST-1** 에 연결된 원격 데스크톱 세션으로 전환하여 Azure Stack 관리자 포털의 허브 메뉴에서 **모든 서비스** 를 클릭합니다.
-1. 서비스 목록에서 **Marketplace 관리** 를 클릭합니다.
+1. **AzSHOST-1**에 연결된 원격 데스크톱 세션으로 전환하여 Azure Stack 관리자 포털의 허브 메뉴에서 **모든 서비스**를 클릭합니다.
+1. 서비스 목록에서 **Marketplace 관리**를 클릭합니다.
 1. **Marketplace 관리 - Marketplace 항목** 블레이드에서 **[smalldisk] Windows Server 2019 Datacenter Server Core-Bring your own license** 항목을 검색하여 해당 항목이 사용 가능한지 확인합니다.
-1. **AzSHOST-1** 에 연결된 원격 데스크톱 세션 내의 브라우저 창에서 새 탭을 열고 (https://aka.ms/appsvconmasdkfstemplate) 으로 이동합니다.
-1. **AzureStack-QuickStart-Templates / appservice-fileserver-standalone** 페이지에서 **azuredeploy.json** 을 클릭한 다음 **Raw** 를 클릭합니다.
+1. **AzSHOST-1**에 연결된 원격 데스크톱 세션 내의 브라우저 창에서 새 탭을 열고 (https://aka.ms/appsvconmasdkfstemplate) 으로 이동합니다.
+1. **AzureStack-QuickStart-Templates / appservice-fileserver-standalone** 페이지에서 **azuredeploy.json**을 클릭한 다음 **Raw**를 클릭합니다.
 1. 페이지의 전체 내용을 선택하여 클립보드에 복사합니다.
-1. Azure Stack 관리자 포털로 다시 전환하여 **+ 리소스 만들기** 를 클릭합니다.
-1. **새로 만들기** 블레이드에서 **사용자 지정** 을 클릭한 다음 **템플릿 배포** 를 클릭합니다.
+1. Azure Stack 관리자 포털로 다시 전환하여 **+ 리소스 만들기**를 클릭합니다.
+1. **새로 만들기** 블레이드에서 **사용자 지정**을 클릭한 다음 **템플릿 배포**를 클릭합니다.
 1. **사용자 지정 배포** 블레이드에서 **편집기에서 사용자 고유의 템플릿을 빌드합니다.** 를 선택합니다. 
 1. **템플릿 편집** 블레이드에서 미리 작성된 템플릿을 클립보드의 내용으로 바꿉니다.
-1. **사용자 지정 배포** 블레이드에서 **템플릿 편집** 을 클릭합니다.
+1. **사용자 지정 배포** 블레이드에서 **템플릿 편집**을 클릭합니다.
 1. **템플릿 편집** 블레이드의 **매개 변수** 섹션에서 다음 값을 설정합니다.
 
-    - **imageReference** 의 **defaultValue**: **MicrosoftWindowsServer | WindowsServer | 2019-Datacenter-Core-smalldisk | latest** 로 설정
-    - **imageReference** 의 **allowedValues**: **MicrosoftWindowsServer | WindowsServer | 2019-Datacenter-Core-smalldisk | latest** 로 설정
-    - **fileServerVirtualMachineSize** 의 **defaultValue**: **Standard_A1_v2** 로 설정
-    - **fileServerVirtualMachineSize** 의 **allowedValues**: **Standard_A1_v2** 로 설정
-    - **adminPassword** 의 **defaultValue**: **Pa55w.rd1234** 로 설정
-    - **fileShareOwnerPassword** 의 **defaultValue**: **Pa55w.rd1234** 로 설정
-    - **fileShareUserPassword** 의 **defaultValue**: **Pa55w.rd1234** 로 설정
+    - **imageReference**의 **defaultValue**: **MicrosoftWindowsServer | WindowsServer | 2019-Datacenter-Core-smalldisk | latest**로 설정
+    - **imageReference**의 **allowedValues**: **MicrosoftWindowsServer | WindowsServer | 2019-Datacenter-Core-smalldisk | latest**로 설정
+    - **fileServerVirtualMachineSize**의 **defaultValue**: **Standard_A1_v2**로 설정
+    - **fileServerVirtualMachineSize**의 **allowedValues**: **Standard_A1_v2**로 설정
+    - **adminPassword**의 **defaultValue**: **Pa55w.rd1234**로 설정
+    - **fileShareOwnerPassword**의 **defaultValue**: **Pa55w.rd1234**로 설정
+    - **fileShareUserPassword**의 **defaultValue**: **Pa55w.rd1234**로 설정
 
     > **참고:** 그러면 **Parameters** 섹션의 콘텐츠가 다음과 같이 설정됩니다.
 
@@ -275,9 +270,9 @@ ms.locfileid: "137893146"
       },
     ```
 
-1. **템플릿 편집** 블레이드의 **변수** 섹션에서 **"sku": "2016-Datacenter",** 를 **"sku": "2019-Datacenter-Core-smalldisk",** 로 바꾸고 **저장** 을 선택합니다.
-1. **사용자 지정 배포** 블레이드로 돌아와서 **구독** 드롭다운 목록에서 **기본 공급자 구독** 을 선택하고 **리소스 그룹** 섹션에서 **sql.resources-RG** 를 선택합니다.
-1. **사용자 지정 배포** 블레이드에서 **검토 + 만들기** 를 클릭한 다음 **만들기** 를 클릭합니다.
+1. **템플릿 편집** 블레이드의 **변수** 섹션에서 **"sku": "2016-Datacenter",** 를 **"sku": "2019-Datacenter-Core-smalldisk",** 로 바꾸고 **저장**을 선택합니다.
+1. **사용자 지정 배포** 블레이드로 돌아와서 **구독** 드롭다운 목록에서 **기본 공급자 구독**을 선택하고 **리소스 그룹** 섹션에서 **sql.resources-RG**를 선택합니다.
+1. **사용자 지정 배포** 블레이드에서 **검토 + 만들기**를 클릭한 다음 **만들기**를 클릭합니다.
 
     > **참고:** 배포가 완료될 때까지 기다립니다. 약 15분 정도 소요됩니다.
 
@@ -288,13 +283,13 @@ ms.locfileid: "137893146"
 
 - App Service 리소스 공급자 설치
 
-1. **AzSHOST-1** 에 연결된 원격 데스크톱 세션 내의 Azure Stack 관리자 포털 허브 메뉴에서 **모든 서비스** 를 클릭합니다.
-1. 서비스 목록에서 **Marketplace 관리** 를 클릭합니다.
+1. **AzSHOST-1**에 연결된 원격 데스크톱 세션 내의 Azure Stack 관리자 포털 허브 메뉴에서 **모든 서비스**를 클릭합니다.
+1. 서비스 목록에서 **Marketplace 관리**를 클릭합니다.
 1. **Marketplace 관리 - Marketplace 항목** 블레이드에서 **Windows Server 2016 Datacenter-Bring your own license** 항목을 검색하여 해당 항목이 사용 가능한지 확인합니다.
 1. **Marketplace 관리 - Marketplace 항목** 블레이드에서 **사용자 지정 스크립트 확장** 항목을 검색하여 해당 항목이 사용 가능한지 확인합니다.
-1. **AzSHOST-1** 에 연결된 원격 데스크톱 세션 내에서 웹 브라우저를 시작하고 (https://aka.ms/appsvconmasinstaller) 로 이동하여 **AppService.exe** 를 다운로드합니다. 다운로드가 완료되면 **C:\\ Downloads\\ AppServiceRP** 폴더에 해당 파일을 복사합니다(필요 시 폴더 생성).
-1. 웹 브라우저에서 (https://aka.ms/appsvconmashelpers) 로 이동하여 **AppServiceHelperScripts.zip** 을 다운로드합니다. 다운로드가 완료되면 **C:\\ Downloads\\ AppServiceRP** 폴더에 파일의 압축을 풉니다.
-1. **AzSHOST-1** 에 연결된 원격 데스크톱 세션 내에서 관리자로 Windows PowerShell을 시작합니다.
+1. **AzSHOST-1**에 연결된 원격 데스크톱 세션 내에서 웹 브라우저를 시작하고 (https://aka.ms/appsvconmasinstaller) 로 이동하여 **AppService.exe**를 다운로드합니다. 다운로드가 완료되면 **C:\\ Downloads\\ AppServiceRP** 폴더에 해당 파일을 복사합니다(필요 시 폴더 생성).
+1. 웹 브라우저에서 (https://aka.ms/appsvconmashelpers) 로 이동하여 **AppServiceHelperScripts.zip**을 다운로드합니다. 다운로드가 완료되면 **C:\\ Downloads\\ AppServiceRP** 폴더에 파일의 압축을 풉니다.
+1. **AzSHOST-1**에 연결된 원격 데스크톱 세션 내에서 관리자로 Windows PowerShell을 시작합니다.
 1. **관리자: Windows PowerShell** 창에서 다음 명령을 실행하여 Azure Stack에서 App Service에 필요한 인증서를 만듭니다.
 
     ```powershell
@@ -353,14 +348,14 @@ ms.locfileid: "137893146"
     > **참고:** 이렇게 하면 Microsoft Azure App Service 설치 마법사가 시작됩니다.
 
 1. **App Service를 배포하거나 최신 버전으로 업그레이드합니다.** 를 클릭합니다.
-1. **Microsoft 소프트웨어 보조 사용 조건** 페이지에서 내용을 검토하고 **사용 조건을 읽고 이해했으며, 이에 동의합니다.** 체크박스를 클릭한 후에 **다음** 을 클릭합니다.
-1. 타사 사용 조건이 표시되는 페이지에서 내용을 검토하고 **사용 조건을 읽고 이해했으며, 이에 동의합니다.** 체크박스를 클릭한 후에 **다음** 을 클릭합니다.
-1. 관리자 및 테넌트 ARM 엔드포인트가 표시되는 페이지에서 정보가 정확한지 확인하고 **다음** 을 클릭합니다.
-1. Azure Stack App Service 클라우드 정보 페이지에서 **자격 증명** 옵션이 선택되어 있는지 확인하고 **연결** 을 클릭합니다.
+1. **Microsoft 소프트웨어 보조 사용 조건** 페이지에서 내용을 검토하고 **사용 조건을 읽고 이해했으며, 이에 동의합니다.** 체크박스를 클릭한 후에 **다음**을 클릭합니다.
+1. 타사 사용 조건이 표시되는 페이지에서 내용을 검토하고 **사용 조건을 읽고 이해했으며, 이에 동의합니다.** 체크박스를 클릭한 후에 **다음**을 클릭합니다.
+1. 관리자 및 테넌트 ARM 엔드포인트가 표시되는 페이지에서 정보가 정확한지 확인하고 **다음**을 클릭합니다.
+1. Azure Stack App Service 클라우드 정보 페이지에서 **자격 증명** 옵션이 선택되어 있는지 확인하고 **연결**을 클릭합니다.
 1. 메시지가 표시되면 **CloudAdmin@AzureStack.local** 으로 로그인합니다(암호: **Pa55w.rd1234**).
-1. Azure Stack App Service 클라우드 정보 페이지로 돌아와서 **Azure Stack 구독** 드롭다운 목록에서 **기본 공급자 구독** 을 선택하고 **Azure Stack 위치** 드롭다운 목록에서는 **로컬** 을 선택한 후 **다음** 을 클릭합니다.
-1. **가상 네트워크 구성** 에서 기본 설정을 수락하고 **다음** 을 클릭합니다.
-1. 다음 페이지에서 아래 정보를 지정하고 **다음** 을 클릭합니다.
+1. Azure Stack App Service 클라우드 정보 페이지로 돌아와서 **Azure Stack 구독** 드롭다운 목록에서 **기본 공급자 구독**을 선택하고 **Azure Stack 위치** 드롭다운 목록에서는 **로컬**을 선택한 후 **다음**을 클릭합니다.
+1. **가상 네트워크 구성**에서 기본 설정을 수락하고 **다음**을 클릭합니다.
+1. 다음 페이지에서 아래 정보를 지정하고 **다음**을 클릭합니다.
 
     - 파일 공유 UNC 경로: **\\appservicefileshare.local.cloudapp.azurestack.external\websites**
     - 파일 공유 소유자: **fileshareowner**
@@ -368,7 +363,7 @@ ms.locfileid: "137893146"
     - 파일 공유 사용자: **fileshareuser**
     - 파일 공유 사용자 암호: **Pa55w.rd1234**
 
-1. 다음 페이지에서 이 작업 앞부분에서 생성한 애플리케이션 ID를 식별하는 설정을 지정하고 **다음** 을 클릭합니다.
+1. 다음 페이지에서 이 작업 앞부분에서 생성한 애플리케이션 ID를 식별하는 설정을 지정하고 **다음**을 클릭합니다.
 
     - ID 애플리케이션 ID: 이 작업의 앞부분에서 복사한 GUID
     - ID 애플리케이션 인증서 파일(*.pfx): **C:\Downloads\AppServiceRP\sso.appservice.local.azurestack.external.pfx**
@@ -398,8 +393,8 @@ ms.locfileid: "137893146"
     - 프런트 엔드 역할: **1개 인스턴스 - Standard_A1_v2 - [1개 코어, 2048MB]**
     - 공유 작업자 역할: **1개 인스턴스 - Standard_A1_v2 - [1개 코어, 2048MB]**
 
-1. **다음** 을 클릭합니다.
-1. 다음 페이지의 **플랫폼 이미지 선택** 드롭다운 목록에서 **2016 Datacenter - latest** 이미지를 선택하고 **다음** 을 클릭합니다.
+1. **다음**을 클릭합니다.
+1. 다음 페이지의 **플랫폼 이미지 선택** 드롭다운 목록에서 **2016 Datacenter - latest** 이미지를 선택하고 **다음**을 클릭합니다.
 1. 다음 페이지에서 배포용으로 아래 관리자 자격 증명을 지정합니다.
 
     - 작업자 역할 가상 머신 관리자: **SAWorkerAdmin**
@@ -409,12 +404,12 @@ ms.locfileid: "137893146"
     - 기타 역할 가상 머신 암호: **Pa55w.rd1234**
     - 암호 확인: **Pa55w.rd1234**
 
-1. **다음** 을 클릭합니다.
-1. 요약 페이지에서 **배포를 시작하려면 선택하고 [다음]을 클릭하세요.** 체크박스를 클릭하고 배포를 시작하려면 **다음** 을 클릭합니다.
+1. **다음**을 클릭합니다.
+1. 요약 페이지에서 **배포를 시작하려면 선택하고 [다음]을 클릭하세요.** 체크박스를 클릭하고 배포를 시작하려면 **다음**을 클릭합니다.
 
     > **참고:** 설치가 완료될 때까지 기다립니다. 2~3시간 정도 걸릴 수 있습니다.
 
-1. 설치가 완료되면 **끝내기** 를 클릭합니다.
+1. 설치가 완료되면 **끝내기**를 클릭합니다.
 
 
 #### <a name="task-4-validate-the-installation-of-the-app-service-resource-provider"></a>작업 4: App Service 리소스 공급자 설치 유효성 검사
@@ -423,7 +418,7 @@ ms.locfileid: "137893146"
 
 - App Service 리소스 공급자 설치 유효성 검사
 
-1. **AzSHOST-1** 에 연결된 원격 데스크톱 내의 Azure Stack 관리자 포털이 표시된 웹 브라우저 내 허브 메뉴에서 **모든 서비스** 를 선택합니다. 그런 다음 **모든 서비스** 블레이드에서 **관리** 를 선택하고 서비스 목록에서 **App Service** 를 클릭합니다. 
+1. **AzSHOST-1**에 연결된 원격 데스크톱 내의 Azure Stack 관리자 포털이 표시된 웹 브라우저 내 허브 메뉴에서 **모든 서비스**를 선택합니다. 그런 다음 **모든 서비스** 블레이드에서 **관리**를 선택하고 서비스 목록에서 **App Service**를 클릭합니다. 
 
     > **참고:** 브라우저 페이지를 새로 고쳐야 **App Service** 항목이 사용 가능한 상태가 될 수도 있습니다.
 
@@ -449,7 +444,7 @@ ms.locfileid: "137893146"
 - App Service 리소스의 확장 기능 검토
 - App Service 리소스 공급자의 백업 설정 검토
 
-1. **AzSHOST-1** 에 연결된 원격 데스크톱 세션 내의 Azure Stack 관리자 포털이 표시된 웹 브라우저 내 **App Service** 블레이드에서 **역할** 을 클릭합니다.
+1. **AzSHOST-1**에 연결된 원격 데스크톱 세션 내의 Azure Stack 관리자 포털이 표시된 웹 브라우저 내 **App Service** 블레이드에서 **역할**을 클릭합니다.
 1. **App Service | 역할** 블레이드에서 역할 및 해당 인스턴스의 목록을 검토합니다.
 1. **App Service | 역할** 블레이드의 **컨트롤러** 행에서 오른쪽 줄임표 기호를 클릭하고 드롭다운 목록에서 **가상 머신** 항목을 기록해 둡니다.
 
@@ -460,9 +455,9 @@ ms.locfileid: "137893146"
     > **참고:** 기타 모든 역할은 확장 집합을 사용하여 구현되므로 확장이 가능합니다.
 
 1. **App Service | 역할** 블레이드에서 현재 **공유** 작업자 계층에는 웹 작업자 역할만 표시되어 있음을 확인합니다. 
-1. **App Service | 역할** 블레이드 왼쪽의 세로 메뉴에서 **작업자 계층** 을 선택합니다.
-1. **App Service | 작업자 계층** 블레이드에서 **+ 추가** 를 클릭합니다. 
-1. **만들기** 블레이드에서 사용 가능한 옵션을 검토합니다. 사용 가능한 옵션으로는 **공유** 와 **전용** 중 하나를 선택할 수 있는 **컴퓨팅 모드** 드롭다운 목록 등이 있습니다.
+1. **App Service | 역할** 블레이드 왼쪽의 세로 메뉴에서 **작업자 계층**을 선택합니다.
+1. **App Service | 작업자 계층** 블레이드에서 **+ 추가**를 클릭합니다. 
+1. **만들기** 블레이드에서 사용 가능한 옵션을 검토합니다. 사용 가능한 옵션으로는 **공유**와 **전용** 중 하나를 선택할 수 있는 **컴퓨팅 모드** 드롭다운 목록 등이 있습니다.
 
     > **참고:** 사용자 지정 소프트웨어가 포함된 다양한 크기의 가상 머신을 선택한 작업자 계층에서 가상 머신으로 배포할 수 있습니다.
 
@@ -486,17 +481,17 @@ ms.locfileid: "137893146"
 
     > **참고:** App Service 복구 PowerShell cmdlet을 사용하면 복구 중에 백업에서 리소스 공급자 인프라 구성을 다시 만들 수 있습니다. 복구 프로세스 관련 세부 정보는 [Azure Stack Hub에서 App Service 복구](https://docs.microsoft.com/en-us/azure-stack/operator/app-service-recover?view=azs-2008)를 참조하세요.
 
-1. **AzSHOST-1** 에 연결된 원격 데스크톱 세션 내의 Azure Stack 관리자 포털이 표시된 웹 브라우저 내 **App Service** 블레이드에서 **비밀** 을 클릭합니다.
-1. **App Service \| 비밀** 블레이드에서 **비밀 다운로드** 를 클릭하고 **저장** 을 클릭합니다.
-1. **AzSHOST-1** 의 **Downloads** 폴더에 **SystemSecrets.json** 파일이 다운로드되었는지 확인합니다.
+1. **AzSHOST-1**에 연결된 원격 데스크톱 세션 내의 Azure Stack 관리자 포털이 표시된 웹 브라우저 내 **App Service** 블레이드에서 **비밀**을 클릭합니다.
+1. **App Service \| 비밀** 블레이드에서 **비밀 다운로드**를 클릭하고 **저장**을 클릭합니다.
+1. **AzSHOST-1**의 **Downloads** 폴더에 **SystemSecrets.json** 파일이 다운로드되었는지 확인합니다.
 
     > **참고:** **SystemSecrets.json** 파일을 안전한 위치에 복사하고 비밀을 교체할 때마다 이 프로세스를 반복해야 합니다. 
 
     > **참고:** **Appservice_hosting** 및 **Appservice_metering** 데이터베이스를 백업할 때는 Azure Backup Server의 SQL Server 유지 관리 계획을 사용하는 것이 좋습니다. 그러나 SQL Server PowerShell 모듈 cmdlet을 사용하여 이러한 데이터베이스를 백업할 수도 있습니다.
 
-1. **AzSHOST-1** 에 연결된 원격 데스크톱 세션 내에서 **sqlhost1.local.cloudapp.azurestack.external** 로 연결하는 원격 데스크톱 세션으로 전환합니다. 
-1. **SqlHOST1** 에 연결된 원격 데스크톱 세션 내에서 관리자로 Windows PowerShell을 시작합니다.
-1. **SqlHOST1** 에 연결된 원격 데스크톱 세션 내의 **관리자: Windows PowerShell** 창에서 다음 명령을 실행하여 App Service 데이터베이스의 로컬 백업을 수행합니다.
+1. **AzSHOST-1**에 연결된 원격 데스크톱 세션 내에서 **sqlhost1.local.cloudapp.azurestack.external**로 연결하는 원격 데스크톱 세션으로 전환합니다. 
+1. **SqlHOST1**에 연결된 원격 데스크톱 세션 내에서 관리자로 Windows PowerShell을 시작합니다.
+1. **SqlHOST1**에 연결된 원격 데스크톱 세션 내의 **관리자: Windows PowerShell** 창에서 다음 명령을 실행하여 App Service 데이터베이스의 로컬 백업을 수행합니다.
 
     ```powershell
     $date = Get-Date -Format 'yyyyMMdd'
@@ -507,9 +502,9 @@ ms.locfileid: "137893146"
 
     > **참고:** App Service는 지정된 파일 공유에 테넌트 앱 정보를 저장합니다. 파일 공유를 백업할 때는 Azure Backup Server를 사용하는 것이 좋습니다. 그러나 어떤 파일 복사 유틸리티든 이러한 용도로 사용할 수 있습니다.
 
-1. **AzSHOST-1** 에 연결된 원격 데스크톱 세션으로 전환합니다. 그런 다음 **AzSHOST-1** 에 연결된 원격 데스크톱 세션 내의 Azure Stack 관리자 포털이 표시된 웹 브라우저 내 **App Service** 블레이드에서 **시스템 구성** 을 클릭합니다.
-1. Azure Stack 관리자 포털이 표시되는 웹 브라우저의 **App Service \| 시스템 구성** 블레이드에서 **파일 공유** 의 전체 경로를 확인합니다( **\\\\appservicefileshare.local.cloudapp.azurestack.external\\websites**).
-1. **AzSHOST-1** 에 연결된 원격 데스크톱 세션으로 전환한 다음 **관리자: Windows PowerShell** 창에서 다음 명령을 실행하여 App Service 파일 공유의 콘텐츠를 로컬 파일 시스템에 복사합니다.
+1. **AzSHOST-1**에 연결된 원격 데스크톱 세션으로 전환합니다. 그런 다음 **AzSHOST-1**에 연결된 원격 데스크톱 세션 내의 Azure Stack 관리자 포털이 표시된 웹 브라우저 내 **App Service** 블레이드에서 **시스템 구성**을 클릭합니다.
+1. Azure Stack 관리자 포털이 표시되는 웹 브라우저의 **App Service \| 시스템 구성** 블레이드에서 **파일 공유**의 전체 경로를 확인합니다( **\\\\appservicefileshare.local.cloudapp.azurestack.external\\websites**).
+1. **AzSHOST-1**에 연결된 원격 데스크톱 세션으로 전환한 다음 **관리자: Windows PowerShell** 창에서 다음 명령을 실행하여 App Service 파일 공유의 콘텐츠를 로컬 파일 시스템에 복사합니다.
 
     ```powershell
     $source = '\\appservicefileshare.local.cloudapp.azurestack.external\websites'
@@ -542,19 +537,19 @@ ms.locfileid: "137893146"
 
 - 사용자에게 App Service 리소스 제공(클라우드 운영자 역할)
 
-1. **AzS-HOST1** 에 연결된 원격 데스크톱 세션 내에서 [Azure Stack Hub 관리자 포털](https://adminportal.local.azurestack.external/)이 표시된 브라우저 창으로 전환합니다.
-1. Azure Stack Hub 관리자 포털이 표시된 웹 브라우저 창에서 **+ 리소스 만들기** 를 클릭합니다.
-1. **새로 만들기** 블레이드에서 **제안+요금제** 를 클릭한 다음 **요금제** 를 클릭합니다.
+1. **AzS-HOST1**에 연결된 원격 데스크톱 세션 내에서 [Azure Stack Hub 관리자 포털](https://adminportal.local.azurestack.external/)이 표시된 브라우저 창으로 전환합니다.
+1. Azure Stack Hub 관리자 포털이 표시된 웹 브라우저 창에서 **+ 리소스 만들기**를 클릭합니다.
+1. **새로 만들기** 블레이드에서 **제안+요금제**를 클릭한 다음 **요금제**를 클릭합니다.
 1. **새 요금제** 블레이드의 **기본** 탭에서 다음 설정을 지정합니다.
 
     - 표시 이름: **app-service-plan1**
     - 리소스 이름: **app-service-plan1**
-    - 리소스 그룹: 새 리소스 그룹 **app-service-plans-RG** 의 이름.
+    - 리소스 그룹: 새 리소스 그룹 **app-service-plans-RG**의 이름.
 
 1. **다음: 서비스 >** 를 클릭합니다.
 1. **새 요금제** 블레이드의 **서비스** 탭에서 **Microsoft.Web** 체크박스를 선택합니다.
 1. **다음: 할당량>** 을 클릭합니다.
-1. **새 요금제** 블레이드의 **할당량** 탭에서 **새로 만들기** 를 선택하고 **만들기** 블레이드에서 다음 설정을 지정한 후에 **확인** 을 클릭합니다.
+1. **새 요금제** 블레이드의 **할당량** 탭에서 **새로 만들기**를 선택하고 **만들기** 블레이드에서 다음 설정을 지정한 후에 **확인**을 클릭합니다.
 
     - 이름: **app-service-quota1**
     - App Service 요금제: **사용자 지정** **20**
@@ -565,11 +560,11 @@ ms.locfileid: "137893146"
 
     >**참고**: 사용량 요금제 모델에서 Azure Functions를 제공하려면 공유 웹 작업자를 배포해야 합니다.
 
-1. **새 요금제** 블레이드의 **할당량** 탭으로 돌아와서 **검토 + 만들기** 를 클릭한 다음 **만들기** 를 클릭합니다.
+1. **새 요금제** 블레이드의 **할당량** 탭으로 돌아와서 **검토 + 만들기**를 클릭한 다음 **만들기**를 클릭합니다.
 
     >**참고**: 배포가 완료될 때까지 기다립니다. 몇 초면 끝납니다.
 
-1. **AzS-HOST1** 에 연결된 원격 데스크톱 세션 내의 Azure Stack Hub 관리자 포털이 표시된 웹 브라우저 창에서 **새로 만들기** 블레이드로 돌아와서 **제안** 을 클릭합니다.
+1. **AzS-HOST1**에 연결된 원격 데스크톱 세션 내의 Azure Stack Hub 관리자 포털이 표시된 웹 브라우저 창에서 **새로 만들기** 블레이드로 돌아와서 **제안**을 클릭합니다.
 1. **새 제안 만들기** 블레이드의 **기본** 탭에서 다음 설정을 지정합니다.
 
     - 표시 이름: **app-service-offer1**
@@ -580,9 +575,9 @@ ms.locfileid: "137893146"
 1. **다음: 기본 플랜 >** 을 클릭합니다. 
 1. **새 제안 만들기** 블레이드의 **기본 요금제** 탭에서 **app-service-plan1** 항목 옆의 체크박스를 선택합니다.
 1. **다음: 추가 기능 플랜 >** 을 클릭합니다.
-1. **추가 요금제** 설정은 기본값으로 유지하고 **검토 + 만들기** 를 클릭한 다음 **만들기** 를 클릭합니다.
+1. **추가 요금제** 설정은 기본값으로 유지하고 **검토 + 만들기**를 클릭한 다음 **만들기**를 클릭합니다.
 
-    >**참고**: 배포가 완료될 때까지 기다립니다. 몇 초면 끝납니다.
+    >**참고**: 배포가 완료될 때까지 기다리세요. 몇 초면 끝납니다.
 
 
 #### <a name="task-2-create-a-web-app-as-a-user"></a>작업 2: 웹앱 만들기(사용자 역할)
@@ -592,11 +587,11 @@ ms.locfileid: "137893146"
 - 테스트 사용자 계정 만들기
 - 웹앱 만들기(사용자 역할)
 
-1. **AzS-HOST1** 에 연결된 원격 데스크톱 세션 내에서 **시작** 을 클릭하고 시작 메뉴에서 **Windows 관리 도구** 를 클릭합니다. 그런 다음 관리 도구 목록에서 **Active Directory 관리 센터** 를 두 번 클릭합니다.
+1. **AzS-HOST1**에 연결된 원격 데스크톱 세션 내에서 **시작**을 클릭하고 시작 메뉴에서 **Windows 관리 도구**를 클릭합니다. 그런 다음 관리 도구 목록에서 **Active Directory 관리 센터**를 두 번 클릭합니다.
 1. **Active Directory 관리 센터** 콘솔에서 **azurestack(로컬)** 을 클릭합니다.
 1. 세부 정보 창에서 **사용자** 컨테이너를 두 번 클릭합니다.
-1. **작업** 창의 **사용자** 섹션에서 **새로 만들기 -> 사용자** 를 클릭합니다.
-1. **사용자 만들기** 창에서 다음 설정을 지정하고 **확인** 을 클릭합니다. 
+1. **작업** 창의 **사용자** 섹션에서 **새로 만들기 -> 사용자**를 클릭합니다.
+1. **사용자 만들기** 창에서 다음 설정을 지정하고 **확인**을 클릭합니다. 
 
     - 전체 이름: **T1U1**
     - 사용자 UPN 로그온: **t1u1@azurestack.local**
@@ -604,37 +599,37 @@ ms.locfileid: "137893146"
     - 암호: **Pa55w.rd**
     - 암호 옵션: **기타 암호 옵션 -> 암호 사용 기간 제한 없음**
 
-1. **AzS-HOST1** 에 연결된 원격 데스크톱 세션 내에서 웹 브라우저의 InPrivate 세션을 시작합니다.
-1. 웹 브라우저 창에서 [Azure Stack Hub 사용자 포털](https://portal.local.azurestack.external)로 이동하여 **t1u1@azurestack.local** 및 암호 **Pa55w.rd** 로 로그인합니다.
+1. **AzS-HOST1**에 연결된 원격 데스크톱 세션 내에서 웹 브라우저의 InPrivate 세션을 시작합니다.
+1. 웹 브라우저 창에서 [Azure Stack Hub 사용자 포털](https://portal.local.azurestack.external)로 이동하여 **t1u1@azurestack.local** 및 암호 **Pa55w.rd**로 로그인합니다.
 1. Azure Stack Hub 사용자 포털의 대시보드에서 **구독 가져오기** 타일을 클릭합니다.
-1. **구독 가져오기** 블레이드의 **이름** 텍스트 상자에 **t1u1-app-service-subscription1** 을 입력합니다.
-1. 제안 목록에서 **app-service-offer1** 을 선택하고 **만들기** 를 클릭합니다.
-1. **구독이 생성되었습니다. 구독 사용을 시작하려면 포털을 새로 고쳐야 합니다.** 메시지가 표시되면 **새로 고침** 을 클릭합니다. 
-1. Azure Stack Hub 테넌트 포털의 허브 메뉴에서 **+ 리소스 만들기** 를 클릭합니다.
-1. 서비스 목록에서 **웹 + 모바일** 을 클릭한 다음 **웹앱** 을 클릭합니다. 
+1. **구독 가져오기** 블레이드의 **이름** 텍스트 상자에 **t1u1-app-service-subscription1**을 입력합니다.
+1. 제안 목록에서 **app-service-offer1**을 선택하고 **만들기**를 클릭합니다.
+1. **구독이 생성되었습니다. 구독 사용을 시작하려면 포털을 새로 고쳐야 합니다.** 메시지가 표시되면 **새로 고침**을 클릭합니다. 
+1. Azure Stack Hub 테넌트 포털의 허브 메뉴에서 **+ 리소스 만들기**를 클릭합니다.
+1. 서비스 목록에서 **웹 + 모바일**을 클릭한 다음 **웹앱**을 클릭합니다. 
 1. **웹앱** 블레이드에서 다음 설정을 지정합니다.
 
     - 구독: **t1u1-app-service-subscription1**
     - 앱 이름: **t1u1webapp1**
-    - 리소스 그룹: 새 리소스 그룹 **webapps-RG** 의 이름.
+    - 리소스 그룹: 새 리소스 그룹 **webapps-RG**의 이름.
 
-1. **웹앱** 블레이드에서 **App Service 계획/위치** 를 클릭하고 **App Service 계획** 블레이드에서 **+ 새로 만들기** 를 클릭합니다. 
+1. **웹앱** 블레이드에서 **App Service 계획/위치**를 클릭하고 **App Service 계획** 블레이드에서 **+ 새로 만들기**를 클릭합니다. 
 1. **새 App Service 계획** 블레이드에서 다음 설정을 지정합니다.
 
     - App Service 계획: **appserviceplan1**
     - 위치: **로컬**
 
-1. **새 App Service 계획** 블레이드에서 **가격 책정 계층** 을 클릭합니다.
-1. **사양 선택기** 블레이드에서 **F1** 가격 책정 계층을 선택하고 **적용** 을 클릭합니다.
-1. **새 App Service 계획** 블레이드로 돌아와서 **확인** 을 클릭합니다.
-1. **웹앱** 블레이드로 돌아와서 **만들기** 를 클릭합니다.
+1. **새 App Service 계획** 블레이드에서 **가격 책정 계층**을 클릭합니다.
+1. **사양 선택기** 블레이드에서 **F1** 가격 책정 계층을 선택하고 **적용**을 클릭합니다.
+1. **새 App Service 계획** 블레이드로 돌아와서 **확인**을 클릭합니다.
+1. **웹앱** 블레이드로 돌아와서 **만들기**를 클릭합니다.
 
     >**참고**: 배포가 완료될 때까지 기다립니다. 1분 미만이 소요됩니다.
 
-1. **AzS-HOST1** 에 연결된 원격 데스크톱 세션 내의 Azure Stack Hub 사용자 포털이 표시된 웹 브라우저 InPrivate 세션 내 허브 메뉴에서 **모든 리소스** 를 클릭합니다.
-1. **모든 리소스** 블레이드의 구독 필터 드롭다운 목록에서 **t1u1-app-service-subscription1** 항목을 선택하고 **새로 고침** 을 클릭합니다.
+1. **AzS-HOST1**에 연결된 원격 데스크톱 세션 내의 Azure Stack Hub 사용자 포털이 표시된 웹 브라우저 InPrivate 세션 내 허브 메뉴에서 **모든 리소스**를 클릭합니다.
+1. **모든 리소스** 블레이드의 구독 필터 드롭다운 목록에서 **t1u1-app-service-subscription1** 항목을 선택하고 **새로 고침**을 클릭합니다.
 1. **모든 리소스** 블레이드의 리소스 목록에서 **t1u1webapp1** 항목을 클릭합니다.
-1. **t1u1webapp1** 블레이드에서 **찾아보기** 를 클릭합니다.
+1. **t1u1webapp1** 블레이드에서 **찾아보기**를 클릭합니다.
 
     >**참고**: 그러면 다른 브라우저 탭이 열리고 새로 프로비전한 웹앱의 기본 홈 페이지가 표시됩니다.
 
